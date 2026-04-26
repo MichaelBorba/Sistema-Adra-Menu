@@ -76,8 +76,7 @@
         <div id="tela-4" class="tela">
             <div class="bg-[#007d5c] p-6 rounded-[35px] shadow-2xl">
                 <p class="text-white font-bold border-b border-white/20 pb-3 mb-4 uppercase text-center text-xs tracking-widest">Chamada de Equipe</p>
-                <div id="lista-corpo" class="space-y-4 max-h-[300px] overflow-y-auto pr-2">
-                    </div>
+                <div id="lista-corpo" class="space-y-4 max-h-[300px] overflow-y-auto pr-2"></div>
             </div>
             <button onclick="mudarTela(5)" class="btn-acao w-full py-4 mt-8 uppercase tracking-widest">Confirmar Presenças</button>
         </div>
@@ -91,7 +90,8 @@
     </main>
 
     <footer class="p-6 flex justify-between items-center bg-gray-50 border-t border-gray-100">
-        <button onclick="window.location.reload()" class="bg-red-50 px-4 py-2 rounded-xl text-red-600 font-bold text-xs uppercase">Sair</button>
+        <button onclick="window.location.href='index.html'" class="bg-red-50 px-4 py-2 rounded-xl text-red-600 font-bold text-xs uppercase">Sair</button>
+        
         <button onclick="mudarTela(1)" class="bg-indigo-600 p-4 rounded-full text-white shadow-2xl hover:scale-105 transition-transform">
             <svg width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
         </button>
@@ -99,30 +99,23 @@
 </div>
 
 <script>
-    // === DADOS DE TESTE ===
     const USUARIO_TESTE = "Mic@";
     const SENHA_TESTE = "1";
-
     let usuarioLogado = "";
     let plantao = { turno: '', posto: '', equipe: [] };
 
-    // === LOGIN ===
     function realizarLogin() {
         const user = document.getElementById('input-usuario').value;
         const pass = document.getElementById('input-senha').value;
-
         if(user === USUARIO_TESTE && pass === SENHA_TESTE) {
             usuarioLogado = user;
             document.getElementById('nome-operador').innerText = usuarioLogado;
             document.getElementById('user-tag').classList.remove('hidden');
             document.getElementById('modal-login').style.display = 'none';
             mudarTela(1);
-        } else {
-            alert("❌ Usuário ou senha inválidos!");
-        }
+        } else { alert("❌ Usuário ou senha inválidos!"); }
     }
 
-    // === NAVEGAÇÃO ===
     function mudarTela(n) {
         document.querySelectorAll('.tela').forEach(t => t.classList.remove('tela-ativa'));
         const target = document.getElementById('tela-' + n);
@@ -130,18 +123,11 @@
     }
 
     function setTurno(t) { plantao.turno = t; mudarTela(3); }
-    
-    function setPosto(p) { 
-        plantao.posto = p; 
-        gerarEquipe();
-        mudarTela(4); 
-    }
+    function setPosto(p) { plantao.posto = p; gerarEquipe(); mudarTela(4); }
 
     function gerarEquipe() {
-        // Simulação de base de dados dos funcionários
         const nomes = ["Ricardo Oliveira", "Bruna Silva", "Marcos Souza", "Ana Maria", "Sérgio Mendes", "Luciana Costa"];
         plantao.equipe = nomes.map(n => ({ nome: n, status: 'Presente' }));
-        
         const corpo = document.getElementById('lista-corpo');
         corpo.innerHTML = plantao.equipe.map((func, i) => `
             <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl hover:bg-white/10 transition-colors">
@@ -159,41 +145,31 @@
         const doc = new jsPDF();
         const obs = document.getElementById('texto-obs').value;
         const dataH = new Date().toLocaleString();
-
         doc.setFillColor(0, 125, 92);
         doc.rect(0, 0, 210, 40, 'F');
-        
         doc.setTextColor(255, 255, 255);
         doc.setFontSize(22);
         doc.text("FECHAMENTO DE PLANTÃO - ADRA", 20, 25);
-        
         doc.setTextColor(0, 0, 0);
         doc.setFontSize(10);
         doc.text(`Gerado em: ${dataH}`, 20, 50);
-        doc.setFontSize(12);
         doc.text(`RESPONSÁVEL: ${usuarioLogado}`, 20, 60);
         doc.text(`TURNO: ${plantao.turno} | POSTO: ${plantao.posto}`, 20, 70);
-        
         doc.setFont("helvetica", "bold");
         doc.text("STATUS DA EQUIPE:", 20, 85);
         doc.setFont("helvetica", "normal");
-        
         plantao.equipe.forEach((f, i) => {
             const cor = f.status === 'Presente' ? "[P]" : "[F]";
             doc.text(`${cor} ${f.nome}`, 25, 95 + (i * 8));
         });
-
         doc.setFont("helvetica", "bold");
         doc.text("OCORRÊNCIAS REGISTRADAS:", 20, 160);
         doc.setFont("helvetica", "normal");
-        
         const splitObs = doc.splitTextToSize(obs || "Sem ocorrências registradas no período.", 170);
         doc.text(splitObs, 20, 170);
-
         doc.save(`Plantao_${plantao.posto}_${usuarioLogado}.pdf`);
         alert("✅ Relatório gerado com sucesso!");
     }
 </script>
-
 </body>
 </html>
