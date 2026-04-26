@@ -65,7 +65,6 @@
             box-shadow: 0 15px 30px rgba(0,0,0,0.2);
         }
 
-        /* Efeito de clique para Tablet/Celular */
         .menu-card:active { transform: scale(0.95); }
         
         .menu-card i { font-size: 3em; margin-bottom: 15px; color: #40e0d0; }
@@ -74,7 +73,6 @@
         
         .footer { margin-top: auto; padding: 30px 0; font-size: 0.9em; opacity: 0.6; }
 
-        /* Ajuste para telas pequenas */
         @media (max-width: 600px) {
             h1 { font-size: 1.6em; }
             .menu-grid { grid-template-columns: 1fr; }
@@ -96,31 +94,31 @@
             <p>Registre abertura e fechamento de plantões, controle de escalas e turnos de trabalho</p>
         </div>
 
-        <div class="menu-card members" onclick="redirectTo('acolhidos.html')">
+        <div class="menu-card members" onclick="redirectTo('#')">
             <i class="fas fa-users"></i>
             <h3>Gerenciador de Acolhidos</h3>
             <p>Cadastro completo, histórico de movimentação e controle de presença dos acolhidos</p>
         </div>
         
-        <div class="menu-card reports" onclick="redirectTo('estatisticas.html')">
+        <div class="menu-card reports" onclick="redirectTo('#')">
             <i class="fas fa-chart-line"></i>
             <h3>Relatórios e Estatísticas</h3>
             <p>Gere relatórios detalhados, gráficos e análises sobre os acolhidos e movimentações</p>
         </div>
         
-        <div class="menu-card settings" onclick="redirectTo('configuracoes.html')">
+        <div class="menu-card settings" onclick="redirectTo('#')">
             <i class="fas fa-cogs"></i>
             <h3>Configurações do Sistema</h3>
             <p>Configure parâmetros do sistema, backup de dados e preferências de funcionamento</p>
         </div>
         
-        <div class="menu-card oficinas" onclick="redirectTo('oficinas.html')">
+        <div class="menu-card oficinas" onclick="redirectTo('#')">
             <i class="fas fa-tools"></i>
             <h3>Oficinas</h3>
             <p>Gerencie oficinas, atividades e workshops oferecidos aos acolhidos</p>
         </div>
         
-        <div class="menu-card help" onclick="redirectTo('ajuda.html')">
+        <div class="menu-card help" onclick="redirectTo('#')">
             <i class="fas fa-question-circle"></i>
             <h3>Ajuda e Suporte</h3>
             <p>Documentação, tutoriais e informações de contato para suporte técnico</p>
